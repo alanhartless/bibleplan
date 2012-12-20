@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>Bible Reading Plan Module</name>
+	<author>Alan Hartless</author>
+	<creationDate>January 2011</creationDate>
+	<copyright>Copyright (C) 2011 HartlessByDesign. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>webmaster@hartlessbydesign.com</authorEmail>
+	<authorUrl>http://hartlessbydesign.com</authorUrl>
+	<version>1.7.0</version>
+	<description>This module will display the selected bible reading plan by week.</description>
+    <scriptfile>script.bibleplan.php</scriptfile>
+	<files>
+		<filename module="mod_bibleplan">mod_bibleplan.php</filename>
+        <filename>helper.php</filename>
+        <filename>index.html</filename>
+        <filename>script.bibleplan.php</filename>
+		<folder>images</folder>
+        <folder>includes</folder>
+		<folder>readingplans</folder>
+        <folder>tmpl</folder>
+	</files>
+    <languages>
+		<language tag="en-GB">en-GB.mod_bibleplan.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+		        <field name="start_date" type="calendar" default="2011-01-01" label="Date to start plan" description="The first day of the reading plan will start on this date.  Date must be in yyyy-dd-mm format." format="%Y-%m-%d" />
+                <field name="start_dow" type="list" default="1" label="Day of the week to start with" description="Choose what day of the week to start with.">
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                    <option value="6">Saturday</option>
+                    <option value="7">Sunday</option>
+                </field>
+                <field name="number_per_week" type="list" default="6" label="Number of days for readings per week" description="Choose how many days per week should have readings.  Other days will be left open as 'catch up' days.">
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                </field>
+                <field name="bibleplan" type="sql" label="Reading Plan" description="Choose the reading plan to be displayed." query="SELECT id, name FROM #__bible_plans" key_field="id" value_field="name" /> />
+		        <field name="use_abbr" type="radio" default="0" label="Use Book Name Abbreviations?" description="If yes, book names are displayed as abbreviations.">
+		            <option value="0">No</option>
+		            <option value="1">Yes</option>
+		        </field>
+				<field name="parse_links" type="radio" default="1" label="Parse Verses to Links" description="If yes, verses are converted to BibleGateway.com links.  The Scripture Links plugin is used if installed and enabled.">
+		            <option value="0">No</option>
+		            <option value="1">Yes</option>
+		        </field>
+				<field name="bible_version" type="list" default="ESV" label="Bible Version for Links" description="Select the Bible version that should be used by default on BibleGateway.com. Note that if you use a language other than English, you must translate the module's language file into the selected language.">
+					<option value="AMU">Amuzgo de Guerrero (AMU)</option>
+					<option value="AMU">&#160;&#160;&#160;&#160;&#160;Amuzgo de Guerrero</option>
+					<option value="ALAB">العربية (AR)</option>
+					<option value="ALAB">&#160;&#160;&#160;&#160;&#160;Arabic Life Application Bible</option>
+					<option value="BULG">Български (BG)</option>
+					<option value="BULG">&#160;&#160;&#160;&#160;&#160;Bulgarian Bible</option>
+					<option value="BG1940">&#160;&#160;&#160;&#160;&#160;1940 Bulgarian Bible</option>
+					<option value="CCO">Chinanteco de Comaltepec (CCO)</option>
+					<option value="CCO">&#160;&#160;&#160;&#160;&#160;Chinanteco de Comaltepec</option>
+					<option value="CKW">Cakchiquel Occidental (CKW)</option>
+					<option value="CKW">&#160;&#160;&#160;&#160;&#160;Cakchiquel Occidental</option>
+					<option value="HCV">Kreyol (CPF)</option>
+					<option value="HCV">&#160;&#160;&#160;&#160;&#160;Haitian Creole Version</option>
+					<option value="SNC">Čeština (CS)</option>
+					<option value="SNC">&#160;&#160;&#160;&#160;&#160;Slovo na cestu</option>
+					<option value="DN1933">Dansk (DA)</option>
+					<option value="DN1933">&#160;&#160;&#160;&#160;&#160;Dette er Biblen pÃ¥ dansk</option>
+					<option value="HOF">Deutsch (DE)</option>
+					<option value="HOF">&#160;&#160;&#160;&#160;&#160;Hoffnung für Alle</option>
+					<option value="LUTH1545">&#160;&#160;&#160;&#160;&#160;Luther Bibel 1545</option>
+					<option value="NIV">English (EN)</option>
+					<option value="NIV">&#160;&#160;&#160;&#160;&#160;New International Version, ©2011</option>
+					<option value="NASB">&#160;&#160;&#160;&#160;&#160;New American Standard Bible</option>
+					<option value="MSG">&#160;&#160;&#160;&#160;&#160;The Message</option>
+					<option value="AMP">&#160;&#160;&#160;&#160;&#160;Amplified Bible</option>
+					<option value="NLT">&#160;&#160;&#160;&#160;&#160;New Living Translation</option>
+					<option value="KJV">&#160;&#160;&#160;&#160;&#160;King James Version</option>
+					<option value="ESV">&#160;&#160;&#160;&#160;&#160;English Standard Version</option>
+					<option value="CEV">&#160;&#160;&#160;&#160;&#160;Contemporary English Version</option>
+					<option value="NKJV">&#160;&#160;&#160;&#160;&#160;New King James Version</option>
+					<option value="NCV">&#160;&#160;&#160;&#160;&#160;New Century Version</option>
+					<option value="CEB">&#160;&#160;&#160;&#160;&#160;Common English Bible</option>
+					<option value="GW">&#160;&#160;&#160;&#160;&#160;GOD’S WORD Translation</option>
+					<option value="KJ21">&#160;&#160;&#160;&#160;&#160;21st Century King James Version</option>
+					<option value="ASV">&#160;&#160;&#160;&#160;&#160;American Standard Version</option>
+					<option value="YLT">&#160;&#160;&#160;&#160;&#160;Young's Literal Translation</option>
+					<option value="DARBY">&#160;&#160;&#160;&#160;&#160;Darby Translation</option>
+					<option value="HCSB">&#160;&#160;&#160;&#160;&#160;Holman Christian Standard Bible</option>
+					<option value="NIRV">&#160;&#160;&#160;&#160;&#160;New International Reader's Version</option>
+					<option value="WYC">&#160;&#160;&#160;&#160;&#160;Wycliffe New Testament</option>
+					<option value="WE">&#160;&#160;&#160;&#160;&#160;Worldwide English (New Testament)</option>
+					<option value="NIVUK">&#160;&#160;&#160;&#160;&#160;New International Version - UK</option>
+					<option value="TNIV">&#160;&#160;&#160;&#160;&#160;Today’s New International Version, ©2005</option>
+					<option value="NIV1984">&#160;&#160;&#160;&#160;&#160;New International Version 1984, ©1984</option>
+					<option value="RVR1960">Español (ES)</option>
+					<option value="RVR1960">&#160;&#160;&#160;&#160;&#160;Reina-Valera 1960</option>
+					<option value="NVI">&#160;&#160;&#160;&#160;&#160;Nueva Versión Internacional</option>
+					<option value="RVR1995">&#160;&#160;&#160;&#160;&#160;Reina-Valera 1995</option>
+					<option value="NTV">&#160;&#160;&#160;&#160;&#160;Nueva Traducción Viviente</option>
+					<option value="nblh">&#160;&#160;&#160;&#160;&#160;Nueva Biblia Latinoamericana de Hoy</option>
+					<option value="CST">&#160;&#160;&#160;&#160;&#160;Castilian</option>
+					<option value="RVA">&#160;&#160;&#160;&#160;&#160;Reina-Valera Antigua</option>
+					<option value="TLA">&#160;&#160;&#160;&#160;&#160;Traducción en lenguaje actual</option>
+					<option value="LBLA">&#160;&#160;&#160;&#160;&#160;La Biblia de las Américas</option>
+					<option value="LSG">Français (FR)</option>
+					<option value="LSG">&#160;&#160;&#160;&#160;&#160;Louis Segond</option>
+					<option value="BDS">&#160;&#160;&#160;&#160;&#160;La Bible du Semeur</option>
+					<option value="WHNU">Κοινη (GRC)</option>
+					<option value="WHNU">&#160;&#160;&#160;&#160;&#160;1881 Westcott-Hort New Testament</option>
+					<option value="TR1550">&#160;&#160;&#160;&#160;&#160;1550 Stephanus New Testament</option>
+					<option value="TR1894">&#160;&#160;&#160;&#160;&#160;1894 Scrivener New Testament</option>
+					<option value="WLC">תירביע (HE)</option>
+					<option value="WLC">&#160;&#160;&#160;&#160;&#160;The Westminster Leningrad Codex</option>
+					<option value="HLGN">Ilonggo (HIL)</option>
+					<option value="HLGN">&#160;&#160;&#160;&#160;&#160;Hiligaynon Bible</option>
+					<option value="CRO">Hrvatski (HR)</option>
+					<option value="CRO">&#160;&#160;&#160;&#160;&#160;Croatian Bible</option>
+					<option value="KAR">Magyar (HU)</option>
+					<option value="KAR">&#160;&#160;&#160;&#160;&#160;Hungarian KÃ¡roli</option>
+					<option value="ICELAND">Íslenska (IS)</option>
+					<option value="ICELAND">&#160;&#160;&#160;&#160;&#160;Icelandic Bible</option>
+					<option value="LND">Italiano (IT)</option>
+					<option value="LND">&#160;&#160;&#160;&#160;&#160;La Nuova Diodati</option>
+					<option value="LM">&#160;&#160;&#160;&#160;&#160;La Parola è Vita</option>
+					<option value="JAC">Jacalteco, Oriental (JAC)</option>
+					<option value="JAC">&#160;&#160;&#160;&#160;&#160;Jacalteco, Oriental</option>
+					<option value="KEK">Kekchi (KEK)</option>
+					<option value="KEK">&#160;&#160;&#160;&#160;&#160;Kekchi</option>
+					<option value="MAORI">Māori (MI)</option>
+					<option value="MAORI">&#160;&#160;&#160;&#160;&#160;Maori Bible</option>
+					<option value="MNT">Macedonian (MK)</option>
+					<option value="MNT">&#160;&#160;&#160;&#160;&#160;Macedonian New Testament</option>
+					<option value="MVC">Mam, Central (MVC)</option>
+					<option value="MVC">&#160;&#160;&#160;&#160;&#160;Mam, Central</option>
+					<option value="MVJ">Mam, Todos Santos (MVJ)</option>
+					<option value="MVJ">&#160;&#160;&#160;&#160;&#160;Mam de Todos Santos Chuchumatán</option>
+					<option value="REIMER">Plautdietsch (NDS)</option>
+					<option value="REIMER">&#160;&#160;&#160;&#160;&#160;Reimer 2001</option>
+					<option value="NGU">Náhuatl de Guerrero (NGU)</option>
+					<option value="NGU">&#160;&#160;&#160;&#160;&#160;Náhuatl de Guerrero</option>
+					<option value="HTB">Nederlands (NL)</option>
+					<option value="HTB">&#160;&#160;&#160;&#160;&#160;Het Boek</option>
+					<option value="DNB1930">Norsk (NO)</option>
+					<option value="DNB1930">&#160;&#160;&#160;&#160;&#160;Det Norsk Bibelselskap 1930</option>
+					<option value="LB">&#160;&#160;&#160;&#160;&#160;Levande Bibeln</option>
+					<option value="OL">Português (PT)</option>
+					<option value="OL">&#160;&#160;&#160;&#160;&#160;O Livro</option>
+					<option value="AA">&#160;&#160;&#160;&#160;&#160;João Ferreira de Almeida Atualizada</option>
+					<option value="QUT">Quiché, Centro Occidenta (QUT)</option>
+					<option value="QUT">&#160;&#160;&#160;&#160;&#160;Quiché, Centro Occidental</option>
+					<option value="RMNN">Română (RO)</option>
+					<option value="RMNN">&#160;&#160;&#160;&#160;&#160;Romanian</option>
+					<option value="TLCR">&#160;&#160;&#160;&#160;&#160;Romanian</option>
+					<option value="RUSV">Русский (RU)</option>
+					<option value="RUSV">&#160;&#160;&#160;&#160;&#160;Russian Synodal Version</option>
+					<option value="SZ">&#160;&#160;&#160;&#160;&#160;Slovo Zhizny</option>
+					<option value="NPK">Slovenčina (SK)</option>
+					<option value="NPK">&#160;&#160;&#160;&#160;&#160;Nádej pre kazdého</option>
+					<option value="ALB">Shqip (SQ)</option>
+					<option value="ALB">&#160;&#160;&#160;&#160;&#160;Albanian Bible</option>
+					<option value="SVL">Svenska (SV)</option>
+					<option value="SVL">&#160;&#160;&#160;&#160;&#160;Levande Bibeln</option>
+					<option value="SV1917">&#160;&#160;&#160;&#160;&#160;Svenska 1917</option>
+					<option value="SNT">Kiswahili (SW)</option>
+					<option value="SNT">&#160;&#160;&#160;&#160;&#160;Swahili New Testament</option>
+					<option value="SND">Tagalog (TL)</option>
+					<option value="SND">&#160;&#160;&#160;&#160;&#160;Ang Salita ng Diyos</option>
+					<option value="UKR">Українська (UK)</option>
+					<option value="UKR">&#160;&#160;&#160;&#160;&#160;Ukrainian Bible</option>
+					<option value="USP">Uspanteco (USP)</option>
+					<option value="USP">&#160;&#160;&#160;&#160;&#160;Uspanteco</option>
+					<option value="VIET">Tiêng Viêt (VI)</option>
+					<option value="VIET">&#160;&#160;&#160;&#160;&#160;1934 Vietnamese Bible</option>
+					<option value="CUV">汉语 (ZH)</option>
+					<option value="CUV">&#160;&#160;&#160;&#160;&#160;Chinese Union Version (Traditional)</option>
+					<option value="CUVS">&#160;&#160;&#160;&#160;&#160;Chinese Union Version (Simplified)</option>
+		        </field>
+				<field name="audio_link" type="radio" default="0" label="Include an Audio Link" description="Will include a link to listen to the Bible verses.">
+		            <option value="0">No</option>
+		            <option value="1">Yes</option>
+		        </field>
+				<field name="audio_bible" type="list" default="21" label="Bible Version for Audio" description="Select the Audio Bible version that should be used by default on BibleGateway.com.">
+				    <option value="">English</option>
+					<option value="31">&#160;&#160;&#160;&#160;&#160;Contemporary English Version (NT Only)</option>
+					<option value="21">&#160;&#160;&#160;&#160;&#160;English Standard Version (Max McLean)</option>
+					<option value="32">&#160;&#160;&#160;&#160;&#160;English Standard Version (Marquis Laughlin)</option>
+					<option value="25">&#160;&#160;&#160;&#160;&#160;King James Version (Max McLean)</option>
+					<option value="37">&#160;&#160;&#160;&#160;&#160;King James Version (Multiple Readers)</option>
+					<option value="27">&#160;&#160;&#160;&#160;&#160;King James Version (Paul Mims)</option>
+					<option value="26">&#160;&#160;&#160;&#160;&#160;New American Standard Bible</option>
+					<option value="36">&#160;&#160;&#160;&#160;&#160;New International Version (Max McLean)</option>
+					<option value="39">&#160;&#160;&#160;&#160;&#160;New International Version (Charles Taylor)</option>
+					<option value="38">&#160;&#160;&#160;&#160;&#160;New International Version (Multiple Readers)</option>
+					<option value="36">&#160;&#160;&#160;&#160;&#160;Today's New International Version</option>
+					<option value="">Español</option>
+					<option value="30">&#160;&#160;&#160;&#160;&#160;La Biblia de las Americas (NT Only)</option>
+					<option value="40">&#160;&#160;&#160;&#160;&#160;Nueva Version Internacional</option>
+					<option value="">Plautdietsch</option>
+					<option value="33">&#160;&#160;&#160;&#160;&#160;Reimer 2001 (NT Only)</option>
+					<option value="">Slovenčina</option>
+					<option value="29">&#160;&#160;&#160;&#160;&#160;1979 Slovak Bible (NT Only)</option>
+					<option value="">فارسی</option>
+					<option value="28">&#160;&#160;&#160;&#160;&#160;Farsi New Testament (NT Only)</option>
+		        </field>
+				<field name="debug" type="radio" default="0" label="Debug Mode" description="Outputs information useful for debugging.">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</field>
+			</fieldset>
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+                <field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+            </fieldset>
+		</fields>
+	</config>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+        <param name="start_date" type="calendar" default="2011-01-01" label="Date to start plan" description="The first day of the reading plan will start on this date.  Date must be in yyyy-dd-mm format." format="%Y-%m-%d" />
+        <param name="start_dow" type="list" default="1" label="Day of the week to start with" description="Choose what day of the week to start with.">
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
+            <option value="6">Saturday</option>
+            <option value="7">Sunday</option>
+        </param>
+        <param name="number_per_week" type="list" default="6" label="Number of days for readings per week" description="Choose how many days per week should have readings.  Other days will be left open as 'catch up' days.">
+            <option value="0">1</option>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+            <option value="4">5</option>
+            <option value="5">6</option>
+            <option value="6">7</option>
+        </param>
+        <param name="bibleplan" type="list" default="oneyearchronological" label="Reading Plan" description="Choose the reading plan to be displayed.">
+        	<option value="backtothebiblechronological">Back to the Bible Chronological</option>
+            <option value="esvchroniclesandprophets">Chronicles and Prophets</option>
+            <option value="esveverydayinword">Every Day In the Word</option>
+	        <option value="esvgospelsandepistles">Gospel and Epistles</option>
+	        <option value="esvliterarystudybible">ESV Literary Study Bible Plan</option>
+	        <option value="esvpentateuchandhistoryofisrael">Pentateuch and History of Israel</option>
+	        <option value="esvpsalmsandwisdomliterature">Psalms and Wisdom Literature</option>
+	        <option value="esvthroughthebible">Through The Bible</option>
+	        <option value="heartlightotandnt">Old and New Testament</option>
+	        <option value="mcheyne">M'Cheyne</option>
+	        <option value="oneyearchronological">One Year Chronological</option>
+		</param>
+        <param name="use_abbr" type="radio" default="0" label="Use Book Name Abbreviations?" description="If yes, book names are displayed as abbreviations.">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+		<param name="parse_links" type="radio" default="1" label="Parse Verses to Links" description="If yes, verses are converted to BibleGateway.com links.  The Scripture Links plugin is used if installed and enabled.">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+		<param name="bible_version" type="list" default="ESV" label="Bible Version for Links" description="Select the Bible version that should be used by default on BibleGateway.com. Note that if you use a language other than English, you must translate the module's language file into the selected language.">
+			<option value="AMU">Amuzgo de Guerrero (AMU)</option>
+			<option value="AMU">&#160;&#160;&#160;&#160;&#160;Amuzgo de Guerrero</option>
+			<option value="ALAB">العربية (AR)</option>
+			<option value="ALAB">&#160;&#160;&#160;&#160;&#160;Arabic Life Application Bible</option>
+			<option value="BULG">Български (BG)</option>
+			<option value="BULG">&#160;&#160;&#160;&#160;&#160;Bulgarian Bible</option>
+			<option value="BG1940">&#160;&#160;&#160;&#160;&#160;1940 Bulgarian Bible</option>
+			<option value="CCO">Chinanteco de Comaltepec (CCO)</option>
+			<option value="CCO">&#160;&#160;&#160;&#160;&#160;Chinanteco de Comaltepec</option>
+			<option value="CKW">Cakchiquel Occidental (CKW)</option>
+			<option value="CKW">&#160;&#160;&#160;&#160;&#160;Cakchiquel Occidental</option>
+			<option value="HCV">Kreyol (CPF)</option>
+			<option value="HCV">&#160;&#160;&#160;&#160;&#160;Haitian Creole Version</option>
+			<option value="SNC">Čeština (CS)</option>
+			<option value="SNC">&#160;&#160;&#160;&#160;&#160;Slovo na cestu</option>
+			<option value="DN1933">Dansk (DA)</option>
+			<option value="DN1933">&#160;&#160;&#160;&#160;&#160;Dette er Biblen pÃ¥ dansk</option>
+			<option value="HOF">Deutsch (DE)</option>
+			<option value="HOF">&#160;&#160;&#160;&#160;&#160;Hoffnung für Alle</option>
+			<option value="LUTH1545">&#160;&#160;&#160;&#160;&#160;Luther Bibel 1545</option>
+			<option value="NIV">English (EN)</option>
+			<option value="NIV">&#160;&#160;&#160;&#160;&#160;New International Version, ©2011</option>
+			<option value="NASB">&#160;&#160;&#160;&#160;&#160;New American Standard Bible</option>
+			<option value="MSG">&#160;&#160;&#160;&#160;&#160;The Message</option>
+			<option value="AMP">&#160;&#160;&#160;&#160;&#160;Amplified Bible</option>
+			<option value="NLT">&#160;&#160;&#160;&#160;&#160;New Living Translation</option>
+			<option value="KJV">&#160;&#160;&#160;&#160;&#160;King James Version</option>
+			<option value="ESV">&#160;&#160;&#160;&#160;&#160;English Standard Version</option>
+			<option value="CEV">&#160;&#160;&#160;&#160;&#160;Contemporary English Version</option>
+			<option value="NKJV">&#160;&#160;&#160;&#160;&#160;New King James Version</option>
+			<option value="NCV">&#160;&#160;&#160;&#160;&#160;New Century Version</option>
+			<option value="CEB">&#160;&#160;&#160;&#160;&#160;Common English Bible</option>
+			<option value="GW">&#160;&#160;&#160;&#160;&#160;GOD’S WORD Translation</option>
+			<option value="KJ21">&#160;&#160;&#160;&#160;&#160;21st Century King James Version</option>
+			<option value="ASV">&#160;&#160;&#160;&#160;&#160;American Standard Version</option>
+			<option value="YLT">&#160;&#160;&#160;&#160;&#160;Young's Literal Translation</option>
+			<option value="DARBY">&#160;&#160;&#160;&#160;&#160;Darby Translation</option>
+			<option value="HCSB">&#160;&#160;&#160;&#160;&#160;Holman Christian Standard Bible</option>
+			<option value="NIRV">&#160;&#160;&#160;&#160;&#160;New International Reader's Version</option>
+			<option value="WYC">&#160;&#160;&#160;&#160;&#160;Wycliffe New Testament</option>
+			<option value="WE">&#160;&#160;&#160;&#160;&#160;Worldwide English (New Testament)</option>
+			<option value="NIVUK">&#160;&#160;&#160;&#160;&#160;New International Version - UK</option>
+			<option value="TNIV">&#160;&#160;&#160;&#160;&#160;Today’s New International Version, ©2005</option>
+			<option value="NIV1984">&#160;&#160;&#160;&#160;&#160;New International Version 1984, ©1984</option>
+			<option value="RVR1960">Español (ES)</option>
+			<option value="RVR1960">&#160;&#160;&#160;&#160;&#160;Reina-Valera 1960</option>
+			<option value="NVI">&#160;&#160;&#160;&#160;&#160;Nueva Versión Internacional</option>
+			<option value="RVR1995">&#160;&#160;&#160;&#160;&#160;Reina-Valera 1995</option>
+			<option value="NTV">&#160;&#160;&#160;&#160;&#160;Nueva Traducción Viviente</option>
+			<option value="nblh">&#160;&#160;&#160;&#160;&#160;Nueva Biblia Latinoamericana de Hoy</option>
+			<option value="CST">&#160;&#160;&#160;&#160;&#160;Castilian</option>
+			<option value="RVA">&#160;&#160;&#160;&#160;&#160;Reina-Valera Antigua</option>
+			<option value="TLA">&#160;&#160;&#160;&#160;&#160;Traducción en lenguaje actual</option>
+			<option value="LBLA">&#160;&#160;&#160;&#160;&#160;La Biblia de las Américas</option>
+			<option value="LSG">Français (FR)</option>
+			<option value="LSG">&#160;&#160;&#160;&#160;&#160;Louis Segond</option>
+			<option value="BDS">&#160;&#160;&#160;&#160;&#160;La Bible du Semeur</option>
+			<option value="WHNU">Κοινη (GRC)</option>
+			<option value="WHNU">&#160;&#160;&#160;&#160;&#160;1881 Westcott-Hort New Testament</option>
+			<option value="TR1550">&#160;&#160;&#160;&#160;&#160;1550 Stephanus New Testament</option>
+			<option value="TR1894">&#160;&#160;&#160;&#160;&#160;1894 Scrivener New Testament</option>
+			<option value="WLC">תירביע (HE)</option>
+			<option value="WLC">&#160;&#160;&#160;&#160;&#160;The Westminster Leningrad Codex</option>
+			<option value="HLGN">Ilonggo (HIL)</option>
+			<option value="HLGN">&#160;&#160;&#160;&#160;&#160;Hiligaynon Bible</option>
+			<option value="CRO">Hrvatski (HR)</option>
+			<option value="CRO">&#160;&#160;&#160;&#160;&#160;Croatian Bible</option>
+			<option value="KAR">Magyar (HU)</option>
+			<option value="KAR">&#160;&#160;&#160;&#160;&#160;Hungarian KÃ¡roli</option>
+			<option value="ICELAND">Íslenska (IS)</option>
+			<option value="ICELAND">&#160;&#160;&#160;&#160;&#160;Icelandic Bible</option>
+			<option value="LND">Italiano (IT)</option>
+			<option value="LND">&#160;&#160;&#160;&#160;&#160;La Nuova Diodati</option>
+			<option value="LM">&#160;&#160;&#160;&#160;&#160;La Parola è Vita</option>
+			<option value="JAC">Jacalteco, Oriental (JAC)</option>
+			<option value="JAC">&#160;&#160;&#160;&#160;&#160;Jacalteco, Oriental</option>
+			<option value="KEK">Kekchi (KEK)</option>
+			<option value="KEK">&#160;&#160;&#160;&#160;&#160;Kekchi</option>
+			<option value="MAORI">Māori (MI)</option>
+			<option value="MAORI">&#160;&#160;&#160;&#160;&#160;Maori Bible</option>
+			<option value="MNT">Macedonian (MK)</option>
+			<option value="MNT">&#160;&#160;&#160;&#160;&#160;Macedonian New Testament</option>
+			<option value="MVC">Mam, Central (MVC)</option>
+			<option value="MVC">&#160;&#160;&#160;&#160;&#160;Mam, Central</option>
+			<option value="MVJ">Mam, Todos Santos (MVJ)</option>
+			<option value="MVJ">&#160;&#160;&#160;&#160;&#160;Mam de Todos Santos Chuchumatán</option>
+			<option value="REIMER">Plautdietsch (NDS)</option>
+			<option value="REIMER">&#160;&#160;&#160;&#160;&#160;Reimer 2001</option>
+			<option value="NGU">Náhuatl de Guerrero (NGU)</option>
+			<option value="NGU">&#160;&#160;&#160;&#160;&#160;Náhuatl de Guerrero</option>
+			<option value="HTB">Nederlands (NL)</option>
+			<option value="HTB">&#160;&#160;&#160;&#160;&#160;Het Boek</option>
+			<option value="DNB1930">Norsk (NO)</option>
+			<option value="DNB1930">&#160;&#160;&#160;&#160;&#160;Det Norsk Bibelselskap 1930</option>
+			<option value="LB">&#160;&#160;&#160;&#160;&#160;Levande Bibeln</option>
+			<option value="OL">Português (PT)</option>
+			<option value="OL">&#160;&#160;&#160;&#160;&#160;O Livro</option>
+			<option value="AA">&#160;&#160;&#160;&#160;&#160;João Ferreira de Almeida Atualizada</option>
+			<option value="QUT">Quiché, Centro Occidenta (QUT)</option>
+			<option value="QUT">&#160;&#160;&#160;&#160;&#160;Quiché, Centro Occidental</option>
+			<option value="RMNN">Română (RO)</option>
+			<option value="RMNN">&#160;&#160;&#160;&#160;&#160;Romanian</option>
+			<option value="TLCR">&#160;&#160;&#160;&#160;&#160;Romanian</option>
+			<option value="RUSV">Русский (RU)</option>
+			<option value="RUSV">&#160;&#160;&#160;&#160;&#160;Russian Synodal Version</option>
+			<option value="SZ">&#160;&#160;&#160;&#160;&#160;Slovo Zhizny</option>
+			<option value="NPK">Slovenčina (SK)</option>
+			<option value="NPK">&#160;&#160;&#160;&#160;&#160;Nádej pre kazdého</option>
+			<option value="ALB">Shqip (SQ)</option>
+			<option value="ALB">&#160;&#160;&#160;&#160;&#160;Albanian Bible</option>
+			<option value="SVL">Svenska (SV)</option>
+			<option value="SVL">&#160;&#160;&#160;&#160;&#160;Levande Bibeln</option>
+			<option value="SV1917">&#160;&#160;&#160;&#160;&#160;Svenska 1917</option>
+			<option value="SNT">Kiswahili (SW)</option>
+			<option value="SNT">&#160;&#160;&#160;&#160;&#160;Swahili New Testament</option>
+			<option value="SND">Tagalog (TL)</option>
+			<option value="SND">&#160;&#160;&#160;&#160;&#160;Ang Salita ng Diyos</option>
+			<option value="UKR">Українська (UK)</option>
+			<option value="UKR">&#160;&#160;&#160;&#160;&#160;Ukrainian Bible</option>
+			<option value="USP">Uspanteco (USP)</option>
+			<option value="USP">&#160;&#160;&#160;&#160;&#160;Uspanteco</option>
+			<option value="VIET">Tiêng Viêt (VI)</option>
+			<option value="VIET">&#160;&#160;&#160;&#160;&#160;1934 Vietnamese Bible</option>
+			<option value="CUV">汉语 (ZH)</option>
+			<option value="CUV">&#160;&#160;&#160;&#160;&#160;Chinese Union Version (Traditional)</option>
+			<option value="CUVS">&#160;&#160;&#160;&#160;&#160;Chinese Union Version (Simplified)</option>
+        </param>
+		<param name="audio_link" type="radio" default="0" label="Include an Audio Link" description="Will include a link to listen to the Bible verses.">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+		<param name="audio_bible" type="list" default="21" label="Bible Version for Audio" description="Select the Audio Bible version that should be used by default on BibleGateway.com.">
+		    <option value="">English</option>
+			<option value="31">&#160;&#160;&#160;&#160;&#160;Contemporary English Version (NT Only)</option>
+			<option value="21">&#160;&#160;&#160;&#160;&#160;English Standard Version (Max McLean)</option>
+			<option value="32">&#160;&#160;&#160;&#160;&#160;English Standard Version (Marquis Laughlin)</option>
+			<option value="25">&#160;&#160;&#160;&#160;&#160;King James Version (Max McLean)</option>
+			<option value="37">&#160;&#160;&#160;&#160;&#160;King James Version (Multiple Readers)</option>
+			<option value="27">&#160;&#160;&#160;&#160;&#160;King James Version (Paul Mims)</option>
+			<option value="26">&#160;&#160;&#160;&#160;&#160;New American Standard Bible</option>
+			<option value="36">&#160;&#160;&#160;&#160;&#160;New International Version (Max McLean)</option>
+			<option value="39">&#160;&#160;&#160;&#160;&#160;New International Version (Charles Taylor)</option>
+			<option value="38">&#160;&#160;&#160;&#160;&#160;New International Version (Multiple Readers)</option>
+			<option value="36">&#160;&#160;&#160;&#160;&#160;Today's New International Version</option>
+			<option value="">Español</option>
+			<option value="30">&#160;&#160;&#160;&#160;&#160;La Biblia de las Americas (NT Only)</option>
+			<option value="40">&#160;&#160;&#160;&#160;&#160;Nueva Version Internacional</option>
+			<option value="">Plautdietsch</option>
+			<option value="33">&#160;&#160;&#160;&#160;&#160;Reimer 2001 (NT Only)</option>
+			<option value="">Slovenčina</option>
+			<option value="29">&#160;&#160;&#160;&#160;&#160;1979 Slovak Bible (NT Only)</option>
+			<option value="">فارسی</option>
+			<option value="28">&#160;&#160;&#160;&#160;&#160;Farsi New Testament (NT Only)</option>
+        </param>
+		<param name="debug" type="radio" default="0" label="Debug Mode" description="Outputs information useful for debugging.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+    </params>
+</extension>
