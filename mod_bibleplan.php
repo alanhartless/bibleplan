@@ -8,10 +8,13 @@ if (!defined('DS')) {
 include_once JPATH_SITE . DS . "modules" . DS . "mod_bibleplan" . DS . "helper.php";
 include_once JPATH_SITE . DS . "modules" . DS . "mod_bibleplan" . DS . "includes" . DS . "abstract.readingplan.php";
 
-$language =& JFactory::getLanguage();
+$doc = JFactory::getDocument();
+$doc->addStylesheet(JUri::base(true) . "/modules/mod_bibleplan/assets/bibleplan.css");
+
+$language = JFactory::getLanguage();
 $language->load('mod_bibleplan');
 
-$db = & JFactory::getDBO();
+$db = JFactory::getDBO();
 
 $debug = $params->get('debug', 0);
 //$todays_date = '2012-07-03';
@@ -273,7 +276,7 @@ if ($start_timestamp <= $todays_timestamp) {
         }
 
         if ($account_for_leapday && $dow == $leap_day_of_week) {
-            $readings[$dow][] = JText::_('Take a day to review or catch up!');
+            $readings[$dow][] = JText::_('MOD_BIBLEPLAN_DAY_OFF');
             $dow++;
         }
 
@@ -310,7 +313,7 @@ if ($start_timestamp <= $todays_timestamp) {
                 $dow = 1;
             }
 
-            $readings[$dow][] = JText::_('Take a day to review or catch up!');
+            $readings[$dow][] = JText::_('MOD_BIBLEPLAN_DAY_OFF');
             $dow++;
 
             $reading_count++;

@@ -2,9 +2,9 @@
 defined('_JEXEC') or die('Restricted access'); ?>
 
 <?php foreach ($readings as $dow => $verses): ?>
-    <div style="font-size: 125%; width: 100%; display: block;"><?php echo $daysofweek[$dow]; ?></div>
+    <h4 class='bible_dow'><?php echo $daysofweek[$dow]; ?></h4>
     <?php foreach ($verses as $verse): ?>
-    <div style="width: 100%; display: block; text-indent: 25px;"><?php echo $verse; ?></div>
+    <h5 class='bible_verse'><?php echo $verse; ?></h5>
     <?php endforeach; ?>
 <?php endforeach; ?>
-<div style="font-size: 9px; text-align: center; margin-top: 5px;"><?php echo $plan_information; ?></div>
+<div class='bible_planinfo'><?php echo $plan_information; ?></div>

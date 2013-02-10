@@ -74,7 +74,7 @@ class biblePlanHelper {
 
     static function parse_to_bible_link($verses, $version, $debug) {
         $search = urlencode($verses);
-        $link = "<a href='http://www.biblegateway.com/passage/index.php?search=$search&amp;version=$version&amp;interface=print'";
+        $link = "<a class='bible_scripturelink' href='http://www.biblegateway.com/passage/index.php?search=$search&amp;version=$version&amp;interface=print'";
         $link.= " target='_blank' onclick=\"window.open(this.href,this.target,'width=800,height=500,scrollbars=1'); return false;\">";
         $link.= "$verses</a>";
         return $link;
@@ -152,7 +152,7 @@ class biblePlanHelper {
                 echo "Start = $start<br />";
                 echo "End = $end<br /><br />";
             }
-            return '<a style="margin-left: 2px;" title="Audio" href="http://www.biblegateway.com/resources/audio/flash_play.php?aid='.$audio_bible.'&amp;book='.$num.'&amp;chapter='.$start.'&amp;end_chapter='.$end.'" target="_blank" onclick="window.open(this.href,this.target,\'width=400,height=200\'); return false;"><img style="width: 16px; height: 9px; border: 0;" alt="sound.gif" src="' . JURI::root() . '/modules/mod_bibleplan/images/sound.gif" /></a>';
+            return '<a  class="bible_audiolink" title="Audio" href="http://www.biblegateway.com/resources/audio/flash_play.php?aid='.$audio_bible.'&amp;book='.$num.'&amp;chapter='.$start.'&amp;end_chapter='.$end.'" target="_blank" onclick="window.open(this.href,this.target,\'width=400,height=200\'); return false;"><img style="width: 16px; height: 9px; border: 0;" alt="sound.gif" src="' . JURI::root() . '/modules/mod_bibleplan/images/sound.gif" /></a>';
         }
     }
 

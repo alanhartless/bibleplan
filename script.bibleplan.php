@@ -140,7 +140,7 @@ class mod_bibleplanInstallerScript
                     return false;
                 }
 
-                $db =& JFactory::getDBO();
+                $db = JFactory::getDBO();
 
                 $query = "SELECT * FROM #__bible_plans";
                 $db->setQuery($query);
@@ -151,7 +151,7 @@ class mod_bibleplanInstallerScript
                     $plan_name = str_replace('.php', '', $plan);
 
                     //load the reading plan class
-                    $rp =& biblePlanHelper::load_readingplan($plan_name);
+                    $rp = biblePlanHelper::load_readingplan($plan_name);
 
                     if (!array_key_exists($plan_name, $installed_plans)) {
                         if ($rp->install()) {
@@ -161,7 +161,7 @@ class mod_bibleplanInstallerScript
                         }
                     } else {
                         //check for an update
-                        if (version_compare($installed_plans[$plan]->version,  $rp->getVersion(), '<')) {
+                        if (version_compare($installed_plans[$plan_name]->version,  $rp->getVersion(), '<')) {
                             if ($rp->upgrade($plan->version)) {
                                 echo '<p style="color: green;">' . JText::sprintf('MOD_BIBLEPLAN_PLAN_UPGRADE_SUCCESS', $rp->getName()) . '</p>';
                             } else  {
@@ -171,7 +171,7 @@ class mod_bibleplanInstallerScript
                     }
 
                     //remove the installed plan so that we know if we no longer have a file for an installed plan
-                    unset($installed_plans[$plan]);
+                    unset($installed_plans[$plan_name]);
                 }
 
                 if (!empty($installed_plans)) {
@@ -180,10 +180,10 @@ class mod_bibleplanInstallerScript
                         $q = $db->getQuery(true);
                         $q->delete("#__bible_data")->where("bibleplan = " . $db->q($plan->id));
                         $db->setQuery($q);
-                        $q->execute();
+                        $db->execute();
                         $q->delete("#__bible_plans")->where("id = " . $db->q($plan->id));
                         $db->setQuery($q);
-                        $q->execute();
+                        $db->execute();
                         echo "<p>" . JText::sprintf("MOD_BIBLEPLAN_NO_LONGER_AVAILABLE", $plan->name) . "</p>";
                     }
                 }
