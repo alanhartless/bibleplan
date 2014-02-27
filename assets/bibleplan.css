@@ -1,0 +1,20 @@
+.bible_dow {
+}
+
+.bible_verse {
+    text-indent: 25px;
+}
+
+.bible_scripturelink {
+}
+
+.bible_audiolink {
+    margin-left: 2px;
+}
+
+.bible_planinfo {
+    font-size: 9px;
+    text-align: center;
+    margin-top: 5px;
+}
+

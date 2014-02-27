@@ -424,4 +424,8 @@
 			<option value="1">Yes</option>
 		</param>
     </params>
+
+    <updateservers>
+        <server type="extension" priority="1" name="Bible Reading Plan Module"><![CDATA[http://hartlessbydesign.com/index.php?option=com_ars&view=update&task=stream&format=xml&id=7]]></server>
+    </updateservers>
 </extension>
