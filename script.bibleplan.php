@@ -17,7 +17,7 @@ class mod_bibleplanInstallerScript
      * @return void
      */
     function install($parent) {
-        $db =& JFactory::getDBO();
+        $db = JFactory::getDBO();
 
         //create the tables
         $query = 'CREATE TABLE #__bible_plans (
@@ -52,7 +52,7 @@ class mod_bibleplanInstallerScript
      * @return void
      */
     function uninstall($parent) {
-        $db =& JFactory::getDBO();
+        $db = JFactory::getDBO();
         $db->dropTable('#__bible_plans');
         $db->dropTable('#__bible_data');
 
@@ -67,7 +67,7 @@ class mod_bibleplanInstallerScript
      */
     function update($parent) {
         //find out if tables exists
-        $db           =& JFactory::getDBO();
+        $db           = JFactory::getDBO();
         $table_list   = $db->getTableList();
         $table_prefix = $db->getPrefix();
         //create the IPN report table if it does not exist already

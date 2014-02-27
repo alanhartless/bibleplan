@@ -55,7 +55,7 @@ class bibleplan {
             return false;
         }
 
-        $db =& JFactory::getDBO();
+        $db = JFactory::getDBO();
         $q  = $db->getQuery(true);
 
         $q->insert("#__bible_plans")
@@ -97,7 +97,7 @@ class bibleplan {
             return false;
         }
 
-        $db =& JFactory::getDBO();
+        $db = JFactory::getDBO();
         $q  = $db->getQuery(true);
 
         $q->update("#__bible_plans")
@@ -131,7 +131,7 @@ class bibleplan {
      * @return bool
      */
     function uninstall() {
-        $db =& JFactory::getDbo();
+        $db = JFactory::getDbo();
         $q  = $db->getQuery(true);
         $q->delete("#__bible_data")->where("bibleplan = " . $db->q($this->getId()));
         $db->setQuery($q);
